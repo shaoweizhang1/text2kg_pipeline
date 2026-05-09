@@ -14,7 +14,7 @@ import anthropic
 
 logger = logging.getLogger("Extractor")
 
-PROMPT_DIR = Path(__file__).parent / "prompts"
+PROMPT_DIR = Path(__file__).resolve().parent.parent / "prompts"
 MODEL = "claude-haiku-4-5-20251001"
 RATE_LIMIT_DELAY = 0.5  # 500ms between LLM calls
 

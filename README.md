@@ -15,7 +15,7 @@ which are shorter and more clinically actionable (assessment / interventions /
 monitoring) than the full physician encyclopedia. Coverage spans the major
 specialties: cardiology, neurology, endocrinology, pulmonology, etc.
 
-Format is BITS/JATS XML; `parse_nxml.py` flattens each article into
+Format is BITS/JATS XML; `src/parse_nxml.py` flattens each article into
 `(section_title, section_text)` pairs.
 
 ## Ontology
@@ -33,28 +33,34 @@ gives us deduplication without needing a local embedding model.
 
 ```
 nurse-article-*.nxml
-        │   parse_nxml.py
+        │   src/parse_nxml.py
         ▼
   Article(title, sections=[Section(title, text), ...])
-        │   extractor.py            (Claude API, Wikontic prompts)
+        │   src/extractor.py          (Claude API, Wikontic prompts)
         ▼
   raw triples: [{subject, relation, object, ...}]
-        │   umls_linker.py          (UMLS REST API)
+        │   src/umls_linker.py        (UMLS REST API)
         ▼
   (CUI, preferred_name) for each entity
-        │   aligner.py              (CUI-based dedup)
+        │   src/aligner.py            (CUI-based dedup)
         ▼
   output/triplets_enriched.jsonl, entities.json, relations.json
 ```
 
-## Files
+## Layout
 
-- `parse_nxml.py` — BITS/JATS → `Article`/`Section` dataclasses
-- `extractor.py` — Anthropic client; reuses Wikontic's prompts verbatim
-  (in `prompts/`)
-- `umls_linker.py` — UMLS REST API wrapper, in-memory cache
-- `aligner.py` — CUI-based entity/relation normalization + dedup
-- `pipeline.py` — main loop
+```
+text2kg_pipeline/
+├── pipeline.py            # entry point
+├── prompts/               # Wikontic system prompts (verbatim)
+├── src/
+│   ├── parse_nxml.py      # BITS/JATS → Article/Section dataclasses
+│   ├── extractor.py       # Anthropic client + extraction logic
+│   ├── umls_linker.py     # UMLS REST API wrapper, in-memory cache
+│   └── aligner.py         # CUI-based entity/relation normalization + dedup
+├── requirements.txt
+└── README.md
+```
 
 ## Run
 

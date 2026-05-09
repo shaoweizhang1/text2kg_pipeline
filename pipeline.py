@@ -17,10 +17,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from parse_nxml import load_all_nurse_articles
-from extractor import Extractor
-from aligner import Aligner
-from umls_linker import UMLSLinker
+from src.parse_nxml import load_all_nurse_articles
+from src.extractor import Extractor
+from src.aligner import Aligner
+from src.umls_linker import UMLSLinker
 
 LOG_DIR = Path("output")
 LOG_DIR.mkdir(exist_ok=True)
