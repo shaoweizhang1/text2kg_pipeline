@@ -1,0 +1,246 @@
+{
+  "T132": [
+    "PR",
+    "physically related to",
+    "physically_related_to"
+  ],
+  "T133": [
+    "PT",
+    "part of",
+    "part_of"
+  ],
+  "T134": [
+    "CT",
+    "contains"
+  ],
+  "T135": [
+    "LO",
+    "location of",
+    "location_of"
+  ],
+  "T136": [
+    "TR",
+    "temporally related to",
+    "temporally_related_to"
+  ],
+  "T137": [
+    "CW",
+    "co-occurs with",
+    "co-occurs_with"
+  ],
+  "T138": [
+    "PC",
+    "precedes"
+  ],
+  "T139": [
+    "FR",
+    "functionally related to",
+    "functionally_related_to"
+  ],
+  "T140": [
+    "PO",
+    "process of",
+    "process_of"
+  ],
+  "T141": [
+    "CO",
+    "carries out",
+    "carries_out"
+  ],
+  "T142": [
+    "IW",
+    "interacts with",
+    "interacts_with"
+  ],
+  "T143": [
+    "PA",
+    "practices"
+  ],
+  "T144": [
+    "PS",
+    "produces"
+  ],
+  "T145": [
+    "EX",
+    "exhibits"
+  ],
+  "T146": [
+    "DS",
+    "disrupts"
+  ],
+  "T147": [
+    "CA",
+    "causes"
+  ],
+  "T148": [
+    "PV",
+    "prevents"
+  ],
+  "T149": [
+    "CM",
+    "complicates"
+  ],
+  "T150": [
+    "MF",
+    "manifestation of",
+    "manifestation_of"
+  ],
+  "T151": [
+    "AF",
+    "affects"
+  ],
+  "T152": [
+    "OC",
+    "occurs in",
+    "occurs_in"
+  ],
+  "T153": [
+    "MN",
+    "manages"
+  ],
+  "T154": [
+    "TS",
+    "treats"
+  ],
+  "T155": [
+    "US",
+    "uses"
+  ],
+  "T156": [
+    "IN",
+    "indicates"
+  ],
+  "T157": [
+    "RO",
+    "result of",
+    "result_of"
+  ],
+  "T158": [
+    "CR",
+    "conceptually related to",
+    "conceptually_related_to"
+  ],
+  "T159": [
+    "PP",
+    "property of",
+    "property_of"
+  ],
+  "T160": [
+    "CP",
+    "conceptual part of",
+    "conceptual_part_of"
+  ],
+  "T161": [
+    "EV",
+    "evaluation of",
+    "evaluation_of"
+  ],
+  "T162": [
+    "MS",
+    "measures"
+  ],
+  "T163": [
+    "DI",
+    "diagnoses"
+  ],
+  "T164": [
+    "AE",
+    "assesses effect of",
+    "assesses_effect_of"
+  ],
+  "T165": [
+    "II",
+    "issue in",
+    "issue_in"
+  ],
+  "T166": [
+    "AW",
+    "associated with",
+    "associated_with"
+  ],
+  "T172": [
+    "CS",
+    "consists of",
+    "consists_of"
+  ],
+  "T173": [
+    "AD",
+    "adjacent to",
+    "adjacent_to"
+  ],
+  "T174": [
+    "CN",
+    "connected to",
+    "connected_to"
+  ],
+  "T175": [
+    "IC",
+    "interconnects"
+  ],
+  "T176": [
+    "SR",
+    "surrounds"
+  ],
+  "T177": [
+    "TV",
+    "traverses"
+  ],
+  "T178": [
+    "DO",
+    "derivative of",
+    "derivative_of"
+  ],
+  "T179": [
+    "DF",
+    "developmental form of",
+    "developmental_form_of"
+  ],
+  "T180": [
+    "DE",
+    "degree of",
+    "degree_of"
+  ],
+  "T182": [
+    "ME",
+    "measurement of",
+    "measurement_of"
+  ],
+  "T183": [
+    "MT",
+    "method of",
+    "method_of"
+  ],
+  "T187": [
+    "BA",
+    "brings about",
+    "brings_about"
+  ],
+  "T188": [
+    "PE",
+    "performs"
+  ],
+  "T189": [
+    "SP",
+    "spatially related to",
+    "spatially_related_to"
+  ],
+  "T193": [
+    "AN",
+    "analyzes"
+  ],
+  "T198": [
+    "BR",
+    "branch of",
+    "branch_of"
+  ],
+  "T199": [
+    "TB",
+    "tributary of",
+    "tributary_of"
+  ],
+  "T202": [
+    "IG",
+    "ingredient of",
+    "ingredient_of"
+  ]
+}

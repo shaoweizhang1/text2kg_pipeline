@@ -4,19 +4,15 @@ Adapted from Wikontic's openai_utils.py — same prompts, same logic, different 
 """
 
 import json
-import re
 import time
 import logging
-from pathlib import Path
 from typing import List, Dict, Union
 
 import anthropic
 
-logger = logging.getLogger("Extractor")
+from .config import LLM_MAX_TOKENS, LLM_MODEL, LLM_RATE_LIMIT_DELAY, PROMPT_DIR
 
-PROMPT_DIR = Path(__file__).resolve().parent.parent / "prompts"
-MODEL = "claude-haiku-4-5-20251001"
-RATE_LIMIT_DELAY = 0.5  # 500ms between LLM calls
+logger = logging.getLogger("Extractor")
 
 
 class Extractor:
@@ -27,35 +23,44 @@ class Extractor:
             "subject_ranker":     (PROMPT_DIR / "rank_subject_names.txt").read_text(),
             "object_ranker":      (PROMPT_DIR / "rank_object_names.txt").read_text(),
             "relation_ranker":    (PROMPT_DIR / "rank_relation_names.txt").read_text(),
+            "map_type":           (PROMPT_DIR / "map_type_to_ontology.txt").read_text(),
+            "map_relation":       (PROMPT_DIR / "map_relation_to_ontology.txt").read_text(),
         }
         self._last_call = 0.0
 
     def _wait(self):
         elapsed = time.time() - self._last_call
-        if elapsed < RATE_LIMIT_DELAY:
-            time.sleep(RATE_LIMIT_DELAY - elapsed)
+        if elapsed < LLM_RATE_LIMIT_DELAY:
+            time.sleep(LLM_RATE_LIMIT_DELAY - elapsed)
         self._last_call = time.time()
 
     def _call(self, system: str, user: str, as_json: bool = True) -> Union[dict, str]:
         self._wait()
-        msg = self.client.messages.create(
-            model=MODEL,
-            max_tokens=4096,
+        chunks = []
+        with self.client.messages.stream(
+            model=LLM_MODEL,
+            max_tokens=LLM_MAX_TOKENS,
             system=system,
             messages=[{"role": "user", "content": user}],
-        )
-        content = msg.content[0].text.strip()
+        ) as stream:
+            for text in stream.text_stream:
+                chunks.append(text)
+        content = "".join(chunks).strip()
         if not as_json:
             return content
-        try:
-            return json.loads(content)
-        except json.JSONDecodeError:
-            match = re.search(r"(\{.*\}|\[.*\])", content, re.DOTALL)
-            if match:
-                try:
-                    return json.loads(match.group(1))
-                except json.JSONDecodeError:
-                    pass
+        # raw_decode tolerates trailing chatter after a valid JSON prefix.
+        decoder = json.JSONDecoder()
+        candidates = [content]
+        for i, ch in enumerate(content):
+            if ch in "{[":
+                candidates.append(content[i:])
+                break
+        for c in candidates:
+            try:
+                obj, _ = decoder.raw_decode(c)
+                return obj
+            except json.JSONDecodeError:
+                continue
         logger.warning("Could not parse JSON from LLM output: %s", content[:200])
         return {}
 
@@ -101,3 +106,40 @@ class Extractor:
             as_json=False,
         )
         return result.strip()
+
+    def pick_semantic_type(self, freeform: str, candidates_block: str):
+        """Map a freeform type string to a UMLS Semantic Type T-code."""
+        result = self._call(
+            system=self.prompts["map_type"],
+            user=(
+                f"Freeform type: {freeform}\n\n"
+                f"Candidates:\n{candidates_block}"
+            ),
+            as_json=True,
+        )
+        if isinstance(result, dict):
+            t = result.get("t_code")
+            if isinstance(t, str) and t.strip() and t.strip().lower() != "none":
+                return t.strip()
+        return None
+
+    def pick_relation_from_candidates(self, text: str, triplet: Dict, candidates_block: str):
+        """Pick a UMLS SN relation label from a constraint-filtered candidate list."""
+        triplet_str = json.dumps(
+            {k: triplet.get(k) for k in ["subject", "relation", "object", "subject_type", "object_type"]},
+            ensure_ascii=False,
+        )
+        result = self._call(
+            system=self.prompts["map_relation"],
+            user=(
+                f'Text: "{text}"\n'
+                f"Extracted Triplet: {triplet_str}\n"
+                f"Candidate Relations:\n{candidates_block}"
+            ),
+            as_json=True,
+        )
+        if isinstance(result, dict):
+            r = result.get("relation")
+            if isinstance(r, str) and r.strip() and r.strip().lower() != "none":
+                return r.strip()
+        return None

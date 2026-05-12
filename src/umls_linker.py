@@ -5,9 +5,17 @@ import requests
 import logging
 from typing import Optional, Tuple
 
+from .config import (
+    UMLS_API_BASE,
+    UMLS_PAGE_SIZE,
+    UMLS_RATE_LIMIT_DELAY,
+    UMLS_SOURCE_VOCABS,
+    UMLS_TIMEOUT_SEC,
+)
+
 logger = logging.getLogger("UMLSLinker")
-BASE = "https://uts-ws.nlm.nih.gov/rest"
-RATE_LIMIT_DELAY = 0.1  # 100ms between calls (~10 req/s)
+UMLS_MAX_RETRIES = 3
+UMLS_RETRY_DELAY_SEC = 1.0
 
 
 class UMLSLinker:
@@ -18,41 +26,59 @@ class UMLSLinker:
 
     def _wait(self):
         elapsed = time.time() - self._last_call
-        if elapsed < RATE_LIMIT_DELAY:
-            time.sleep(RATE_LIMIT_DELAY - elapsed)
+        if elapsed < UMLS_RATE_LIMIT_DELAY:
+            time.sleep(UMLS_RATE_LIMIT_DELAY - elapsed)
         self._last_call = time.time()
 
-    def lookup(self, entity: str) -> Tuple[Optional[str], Optional[str]]:
-        """Return (CUI, preferred_name) or (None, None)."""
+    def lookup(self, entity: str, type_hint: Optional[str] = None) -> Tuple[Optional[str], Optional[str]]:
+        """Return (CUI, preferred_name) or (None, None).
+
+        ``type_hint`` is accepted for compatibility with the pipeline call site,
+        but UMLS candidate selection stays top-1. Entity deduplication is handled
+        by the ontology-aware structured aligner.
+        """
         key = entity.lower().strip()
         if key in self._cache:
             return self._cache[key]
 
-        self._wait()
-        try:
-            r = requests.get(
-                f"{BASE}/search/current",
-                params={
-                    "string": entity,
-                    "apiKey": self.api_key,
-                    "returnIdType": "concept",
-                    "pageSize": 1,
-                },
-                timeout=15,
-            )
-            r.raise_for_status()
-            results = r.json().get("result", {}).get("results", [])
-            if results and results[0].get("ui") not in ("NONE", "", None):
-                cui = results[0]["ui"]
-                name = results[0].get("name", entity)
-                self._cache[key] = (cui, name)
-                return cui, name
-        except requests.exceptions.Timeout:
-            logger.warning("UMLS timeout for '%s', retrying once", entity)
-            time.sleep(1.0)
-            return self.lookup(entity)
-        except Exception as e:
-            logger.warning("UMLS lookup failed for '%s': %s", entity, e)
+        for attempt in range(1, UMLS_MAX_RETRIES + 1):
+            self._wait()
+            try:
+                r = requests.get(
+                    f"{UMLS_API_BASE}/search/current",
+                    params={
+                        "string": entity,
+                        "apiKey": self.api_key,
+                        "returnIdType": "concept",
+                        "searchType": "normalizedWords",
+                        "sabs": UMLS_SOURCE_VOCABS,
+                        "pageSize": UMLS_PAGE_SIZE,
+                    },
+                    timeout=UMLS_TIMEOUT_SEC,
+                )
+                r.raise_for_status()
+                results = [x for x in r.json().get("result", {}).get("results", [])
+                           if x.get("ui") not in ("NONE", "", None)]
+
+                if results:
+                    pick = results[0]
+                    cui = pick["ui"]
+                    name = pick.get("name", entity)
+                    self._cache[key] = (cui, name)
+                    return cui, name
+                break
+            except requests.exceptions.RequestException as e:
+                if attempt < UMLS_MAX_RETRIES:
+                    logger.warning(
+                        "UMLS lookup failed for '%s' on attempt %d/%d: %s",
+                        entity, attempt, UMLS_MAX_RETRIES, e,
+                    )
+                    time.sleep(UMLS_RETRY_DELAY_SEC * attempt)
+                    continue
+                logger.warning("UMLS lookup failed for '%s': %s", entity, e)
+            except Exception as e:
+                logger.warning("UMLS lookup failed for '%s': %s", entity, e)
+                break
 
         self._cache[key] = (None, None)
         return None, None

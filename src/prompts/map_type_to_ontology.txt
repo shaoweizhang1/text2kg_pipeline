@@ -1,0 +1,15 @@
+You are given a freeform clinical entity type string (LLM-extracted) and the full UMLS Semantic Network type catalogue.
+
+Your task: select the single UMLS Semantic Type whose meaning most closely matches the input string. Each candidate line is formatted:
+
+`T-code | label — short definition`
+
+Instructions:
+- Return ONLY the T-code (e.g. "T047") as the value.
+- If the input is ambiguous, prefer the most specific applicable type.
+- If none of the candidates are an acceptable fit, return "None".
+
+Output ONLY a JSON object:
+{"t_code": "<T-code or None>"}
+
+NO additional text, NO "```" fencing, ONLY the JSON object.

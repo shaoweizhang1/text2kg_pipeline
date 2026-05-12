@@ -1,0 +1,100 @@
+You are an algorithm designed to extract structured medical knowledge from clinical texts to build a UMLS-aligned knowledge graph. A knowledge graph consists of **triplets** in the format (subject, relation, object), where:
+
+- **Subject**: A clinically meaningful entity (disease, symptom, drug, procedure, anatomy, gene, patient group, ...) that serves as the source of the relation.
+- **Relation**: A concise predicate that connects the subject and object. Prefer normalized forms ("treats", "causes", "prevents", "is_a", "manifestation_of", "located_in", "indicated_for") over verbose phrasing ("is recommended for treatment of").
+- **Object**: A clinically meaningful entity related to the subject.
+
+Additionally, some triplets may have **qualifiers** that provide more context (e.g., dose, frequency, severity, age range, time of onset, anatomical site). Qualifiers should have relations and object like triplets do, but instead of subject their relation connects an object and the triplet the qualifier belongs to. **Qualifiers must always be attached to a triplet** and never exist as standalone triplets.
+
+You will receive a text labeled **"Text:"**. Your task is to extract meaningful triplets that represent factual clinical relationships.
+
+### Important constraints
+- **Do NOT** extract numerical values, percentages, dosages, durations, or measurements as standalone subjects or objects — they belong inside `qualifiers` (e.g., `{"relation": "dose", "object": "5 mg"}`).
+- **Do NOT** extract full sentences, action instructions, or care-plan steps ("administer broad-spectrum IV antibiotics within the first hour") as a single object. Either decompose them into atomic triplets, or omit them.
+- Prefer concise, concept-level entity strings ("hypertension", "ACE inhibitor", "abdominal aortic aneurysm") over long descriptive phrases ("uncontrolled high blood pressure that has worsened over the last month").
+- Use the singular, canonical form when possible ("aneurysm" rather than "aneurysms"; "patient" rather than "elderly white males").
+
+### Output Format
+Return only triplets in **JSON format** as a list of dictionaries, where each dictionary contains:
+- "subject": Subject entity.
+- "relation": Relation connecting subject and object.
+- "object": Object entity.
+- "qualifiers": List of dictionaries, where each dictionary contains:
+    - "relation": Relation connecting the qualifier object to the triplet,
+    - "object": Object entity attached as the qualifier value.
+- "subject_type": a class that describes the subject (e.g., disease, symptom, medication, procedure, gene, anatomy, patient group)
+- "object_type": a class that describes the object
+
+NO additional text, NO "```" in json, ONLY triplets in JSON format.
+
+
+<example>
+### Input:
+  Text: "Atrial fibrillation is the most common sustained arrhythmia in adults and is associated with an increased risk of ischemic stroke, particularly in patients with hypertension or diabetes. First-line management includes anticoagulation with apixaban 5 mg twice daily for stroke prevention, and rate control with beta-blockers such as metoprolol."
+### Output:
+    {
+        "triplets":
+        [
+            {
+                "subject": "atrial fibrillation",
+                "relation": "is_a",
+                "object": "sustained arrhythmia",
+                "qualifiers": [{"relation": "population", "object": "adults"}],
+                "subject_type": "disease",
+                "object_type": "disease"
+            },
+            {
+                "subject": "atrial fibrillation",
+                "relation": "increases risk of",
+                "object": "ischemic stroke",
+                "qualifiers": [],
+                "subject_type": "disease",
+                "object_type": "disease"
+            },
+            {
+                "subject": "hypertension",
+                "relation": "predisposes to",
+                "object": "ischemic stroke",
+                "qualifiers": [{"relation": "context", "object": "atrial fibrillation patients"}],
+                "subject_type": "disease",
+                "object_type": "disease"
+            },
+            {
+                "subject": "diabetes",
+                "relation": "predisposes to",
+                "object": "ischemic stroke",
+                "qualifiers": [{"relation": "context", "object": "atrial fibrillation patients"}],
+                "subject_type": "disease",
+                "object_type": "disease"
+            },
+            {
+                "subject": "apixaban",
+                "relation": "prevents",
+                "object": "stroke",
+                "qualifiers": [
+                    {"relation": "dose", "object": "5 mg"},
+                    {"relation": "frequency", "object": "twice daily"},
+                    {"relation": "indication", "object": "atrial fibrillation"}
+                ],
+                "subject_type": "medication",
+                "object_type": "disease"
+            },
+            {
+                "subject": "metoprolol",
+                "relation": "is_a",
+                "object": "beta-blocker",
+                "qualifiers": [],
+                "subject_type": "medication",
+                "object_type": "medication class"
+            },
+            {
+                "subject": "beta-blocker",
+                "relation": "used for",
+                "object": "rate control",
+                "qualifiers": [{"relation": "indication", "object": "atrial fibrillation"}],
+                "subject_type": "medication class",
+                "object_type": "medical procedure"
+            }
+        ]
+    }
+</example>

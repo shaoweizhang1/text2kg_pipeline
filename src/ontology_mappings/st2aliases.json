@@ -1,0 +1,514 @@
+{
+  "T001": [
+    "Organism",
+    "orgm"
+  ],
+  "T002": [
+    "Plant",
+    "plnt"
+  ],
+  "T004": [
+    "Fungus",
+    "fngs"
+  ],
+  "T005": [
+    "Virus",
+    "virs"
+  ],
+  "T007": [
+    "Bacterium",
+    "bact"
+  ],
+  "T008": [
+    "Animal",
+    "anim"
+  ],
+  "T010": [
+    "Vertebrate",
+    "vtbt"
+  ],
+  "T011": [
+    "Amphibian",
+    "amph"
+  ],
+  "T012": [
+    "Bird",
+    "bird"
+  ],
+  "T013": [
+    "Fish",
+    "fish"
+  ],
+  "T014": [
+    "Reptile",
+    "rept"
+  ],
+  "T015": [
+    "Mammal",
+    "mamm"
+  ],
+  "T016": [
+    "Human",
+    "humn"
+  ],
+  "T017": [
+    "Anatomical Structure",
+    "anst"
+  ],
+  "T018": [
+    "Embryonic Structure",
+    "emst"
+  ],
+  "T019": [
+    "Congenital Abnormality",
+    "cgab"
+  ],
+  "T020": [
+    "Acquired Abnormality",
+    "acab"
+  ],
+  "T021": [
+    "Fully Formed Anatomical Structure",
+    "ffas"
+  ],
+  "T022": [
+    "Body System",
+    "bdsy"
+  ],
+  "T023": [
+    "Body Part, Organ, or Organ Component",
+    "bpoc"
+  ],
+  "T024": [
+    "Tissue",
+    "tisu"
+  ],
+  "T025": [
+    "Cell",
+    "cell"
+  ],
+  "T026": [
+    "Cell Component",
+    "celc"
+  ],
+  "T028": [
+    "Gene or Genome",
+    "gngm"
+  ],
+  "T029": [
+    "Body Location or Region",
+    "blor"
+  ],
+  "T030": [
+    "Body Space or Junction",
+    "bsoj"
+  ],
+  "T031": [
+    "Body Substance",
+    "bdsu"
+  ],
+  "T032": [
+    "Organism Attribute",
+    "orga"
+  ],
+  "T033": [
+    "Finding",
+    "fndg"
+  ],
+  "T034": [
+    "Laboratory or Test Result",
+    "lbtr"
+  ],
+  "T037": [
+    "Injury or Poisoning",
+    "inpo"
+  ],
+  "T038": [
+    "Biologic Function",
+    "biof"
+  ],
+  "T039": [
+    "Physiologic Function",
+    "phsf"
+  ],
+  "T040": [
+    "Organism Function",
+    "orgf"
+  ],
+  "T041": [
+    "Mental Process",
+    "menp"
+  ],
+  "T042": [
+    "Organ or Tissue Function",
+    "ortf"
+  ],
+  "T043": [
+    "Cell Function",
+    "celf"
+  ],
+  "T044": [
+    "Molecular Function",
+    "moft"
+  ],
+  "T045": [
+    "Genetic Function",
+    "genf"
+  ],
+  "T046": [
+    "Pathologic Function",
+    "patf"
+  ],
+  "T047": [
+    "Disease or Syndrome",
+    "dsyn"
+  ],
+  "T048": [
+    "Mental or Behavioral Dysfunction",
+    "mobd"
+  ],
+  "T049": [
+    "Cell or Molecular Dysfunction",
+    "comd"
+  ],
+  "T050": [
+    "Experimental Model of Disease",
+    "emod"
+  ],
+  "T051": [
+    "Event",
+    "evnt"
+  ],
+  "T052": [
+    "Activity",
+    "acty"
+  ],
+  "T053": [
+    "Behavior",
+    "bhvr"
+  ],
+  "T054": [
+    "Social Behavior",
+    "socb"
+  ],
+  "T055": [
+    "Individual Behavior",
+    "inbe"
+  ],
+  "T056": [
+    "Daily or Recreational Activity",
+    "dora"
+  ],
+  "T057": [
+    "Occupational Activity",
+    "ocac"
+  ],
+  "T058": [
+    "Health Care Activity",
+    "hlca"
+  ],
+  "T059": [
+    "Laboratory Procedure",
+    "lbpr"
+  ],
+  "T060": [
+    "Diagnostic Procedure",
+    "diap"
+  ],
+  "T061": [
+    "Therapeutic or Preventive Procedure",
+    "topp"
+  ],
+  "T062": [
+    "Research Activity",
+    "resa"
+  ],
+  "T063": [
+    "Molecular Biology Research Technique",
+    "mbrt"
+  ],
+  "T064": [
+    "Governmental or Regulatory Activity",
+    "gora"
+  ],
+  "T065": [
+    "Educational Activity",
+    "edac"
+  ],
+  "T066": [
+    "Machine Activity",
+    "mcha"
+  ],
+  "T067": [
+    "Phenomenon or Process",
+    "phpr"
+  ],
+  "T068": [
+    "Human-caused Phenomenon or Process",
+    "hcpp"
+  ],
+  "T069": [
+    "Environmental Effect of Humans",
+    "eehu"
+  ],
+  "T070": [
+    "Natural Phenomenon or Process",
+    "npop"
+  ],
+  "T071": [
+    "Entity",
+    "enty"
+  ],
+  "T072": [
+    "Physical Object",
+    "phob"
+  ],
+  "T073": [
+    "Manufactured Object",
+    "mnob"
+  ],
+  "T074": [
+    "Medical Device",
+    "medd"
+  ],
+  "T075": [
+    "Research Device",
+    "resd"
+  ],
+  "T077": [
+    "Conceptual Entity",
+    "cnce"
+  ],
+  "T078": [
+    "Idea or Concept",
+    "idcn"
+  ],
+  "T079": [
+    "Temporal Concept",
+    "tmco"
+  ],
+  "T080": [
+    "Qualitative Concept",
+    "qlco"
+  ],
+  "T081": [
+    "Quantitative Concept",
+    "qnco"
+  ],
+  "T082": [
+    "Spatial Concept",
+    "spco"
+  ],
+  "T083": [
+    "Geographic Area",
+    "geoa"
+  ],
+  "T085": [
+    "Molecular Sequence",
+    "mosq"
+  ],
+  "T086": [
+    "Nucleotide Sequence",
+    "nusq"
+  ],
+  "T087": [
+    "Amino Acid Sequence",
+    "amas"
+  ],
+  "T088": [
+    "Carbohydrate Sequence",
+    "crbs"
+  ],
+  "T089": [
+    "Regulation or Law",
+    "rnlw"
+  ],
+  "T090": [
+    "Occupation or Discipline",
+    "ocdi"
+  ],
+  "T091": [
+    "Biomedical Occupation or Discipline",
+    "bmod"
+  ],
+  "T092": [
+    "Organization",
+    "orgt"
+  ],
+  "T093": [
+    "Health Care Related Organization",
+    "hcro"
+  ],
+  "T094": [
+    "Professional Society",
+    "pros"
+  ],
+  "T095": [
+    "Self-help or Relief Organization",
+    "shro"
+  ],
+  "T096": [
+    "Group",
+    "grup"
+  ],
+  "T097": [
+    "Professional or Occupational Group",
+    "prog"
+  ],
+  "T098": [
+    "Population Group",
+    "popg"
+  ],
+  "T099": [
+    "Family Group",
+    "famg"
+  ],
+  "T100": [
+    "Age Group",
+    "aggp"
+  ],
+  "T101": [
+    "Patient or Disabled Group",
+    "podg"
+  ],
+  "T102": [
+    "Group Attribute",
+    "grpa"
+  ],
+  "T103": [
+    "Chemical",
+    "chem"
+  ],
+  "T104": [
+    "Chemical Viewed Structurally",
+    "chvs"
+  ],
+  "T109": [
+    "Organic Chemical",
+    "orch"
+  ],
+  "T114": [
+    "Nucleic Acid, Nucleoside, or Nucleotide",
+    "nnon"
+  ],
+  "T116": [
+    "Amino Acid, Peptide, or Protein",
+    "aapp"
+  ],
+  "T120": [
+    "Chemical Viewed Functionally",
+    "chvf"
+  ],
+  "T121": [
+    "Pharmacologic Substance",
+    "phsu"
+  ],
+  "T122": [
+    "Biomedical or Dental Material",
+    "bodm"
+  ],
+  "T123": [
+    "Biologically Active Substance",
+    "bacs"
+  ],
+  "T125": [
+    "Hormone",
+    "horm"
+  ],
+  "T126": [
+    "Enzyme",
+    "enzy"
+  ],
+  "T127": [
+    "Vitamin",
+    "vita"
+  ],
+  "T129": [
+    "Immunologic Factor",
+    "imft"
+  ],
+  "T130": [
+    "Indicator, Reagent, or Diagnostic Aid",
+    "irda"
+  ],
+  "T131": [
+    "Hazardous or Poisonous Substance",
+    "hops"
+  ],
+  "T167": [
+    "Substance",
+    "sbst"
+  ],
+  "T168": [
+    "Food",
+    "food"
+  ],
+  "T169": [
+    "Functional Concept",
+    "ftcn"
+  ],
+  "T170": [
+    "Intellectual Product",
+    "inpr"
+  ],
+  "T171": [
+    "Language",
+    "lang"
+  ],
+  "T184": [
+    "Sign or Symptom",
+    "sosy"
+  ],
+  "T185": [
+    "Classification",
+    "clas"
+  ],
+  "T190": [
+    "Anatomical Abnormality",
+    "anab"
+  ],
+  "T191": [
+    "Neoplastic Process",
+    "neop"
+  ],
+  "T192": [
+    "Receptor",
+    "rcpt"
+  ],
+  "T194": [
+    "Archaeon",
+    "arch"
+  ],
+  "T195": [
+    "Antibiotic",
+    "antb"
+  ],
+  "T196": [
+    "Element, Ion, or Isotope",
+    "elii"
+  ],
+  "T197": [
+    "Inorganic Chemical",
+    "inch"
+  ],
+  "T200": [
+    "Clinical Drug",
+    "clnd"
+  ],
+  "T201": [
+    "Clinical Attribute",
+    "clna"
+  ],
+  "T203": [
+    "Drug Delivery Device",
+    "drdd"
+  ],
+  "T204": [
+    "Eukaryote",
+    "euka"
+  ],
+  "T186": [
+    "IS",
+    "isa"
+  ]
+}

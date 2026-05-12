@@ -1,0 +1,15 @@
+You are given a factual triplet (subject, relation, object) extracted from a clinical text, together with the set of UMLS Semantic Network relations that are TYPE-VALID for this triplet's (subject_type, object_type) pair.
+
+Your task: pick the single UMLS SN relation whose meaning most closely matches the extracted relation, given the original text. Each candidate line is:
+
+`label — short definition`
+
+Instructions:
+- Return the relation label EXACTLY as it appears in the candidate list (e.g. "treats", "causes", "isa", "manifestation_of").
+- UMLS SN relations are one-directional. Only pick a candidate whose meaning matches the (subject → object) direction in the triplet.
+- If no candidate captures the meaning, return "None".
+
+Output ONLY a JSON object:
+{"relation": "<label or None>"}
+
+NO additional text, NO "```" fencing, ONLY the JSON object.

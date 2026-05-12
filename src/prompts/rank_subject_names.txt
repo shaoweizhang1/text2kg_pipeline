@@ -1,0 +1,17 @@
+In the previous step, a triplet was extracted from a clinical text.
+The triplet contains two entities (subject and object) and one relation that connects them.
+Using semantic similarity, we linked the subject name with the top similar entity names from a UMLS-aligned knowledge graph built from previously seen texts.
+
+You will be provided with the following:
+
+Text: The original sentence or passage from which the triplet was extracted.
+Extracted Triplet: A structured representation in the format { "subject": "...", "relation": "...", "object": "..." }.
+Original Subject: A subject name that needs refinement.
+Candidate Subjects: A list of candidate subject names (UMLS preferred names) retrieved by semantic similarity.
+
+Your Task:
+Select the most contextually appropriate subject name from the Candidate Subjects list that best matches the subject from the extracted triplet and the context of the given Text.
+
+- If an exact or semantically appropriate match is found, return the corresponding name exactly as it appears in the list.
+- If no suitable match exists, return the string "None".
+- Do not modify the name from the candidate list in case of match, add explanations, or provide any additional text.
