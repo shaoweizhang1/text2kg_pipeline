@@ -62,10 +62,10 @@ text2kg_pipeline/
 │   ├── prompts/           # Wikontic-style prompts
 │   ├── parse_nxml.py      # BITS/JATS → Article/Section dataclasses
 │   ├── extractor.py       # Anthropic client + extraction logic
-│   ├── structured_inference.py
-│   ├── structured_aligner.py
+│   ├── structured_inference.py # ontology-aware online pipeline building
+│   ├── structured_aligner.py   # type/relation alignment, typed FAISS retrieval, validation
 │   ├── umls_linker.py     # UMLS REST API wrapper, in-memory cache
-│   └── build_umls_ontology.py
+│   └── build_umls_ontology.py  # build local UMLS ontology mapping files
 ├── requirements.txt
 └── README.md
 ```
