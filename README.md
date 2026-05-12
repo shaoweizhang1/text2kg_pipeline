@@ -10,14 +10,24 @@ StatPearls nurse articles → LLM-extracted triples → UMLS + structured KG ref
 
 ## Data
 
-**StatPearls** (NCBI Bookshelf, collection NBK430685) — physician/nurse-authored
-clinical reference articles. We use only the 117 `nurse-article-*.nxml` files,
-which are shorter and more clinically actionable (assessment / interventions /
-monitoring) than the full physician encyclopedia. Coverage spans the major
-specialties: cardiology, neurology, endocrinology, pulmonology, etc.
+**StatPearls** (NCBI Bookshelf, collection [NBK430685](https://www.ncbi.nlm.nih.gov/books/NBK430685/)) —
+physician/nurse-authored clinical reference articles, freely redistributable
+under the StatPearls Publishing licence (open-access on Bookshelf).
 
-Format is BITS/JATS XML; `src/parse_nxml.py` flattens each article into
-`(section_title, section_text)` pairs.
+Source: the NCBI LitArch bulk archive `statpearls_NBK430685.tar.gz`, downloaded
+from the NCBI Bookshelf FTP mirror and extracted in place. The archive contains
+the full StatPearls corpus (~10k chapters); after extraction we keep only the
+117 `nurse-article-*.nxml` files and drop everything else. These nurse articles
+are shorter and more clinically actionable (assessment / interventions /
+monitoring) than the full physician encyclopedia, while still covering the
+major specialties (cardiology, neurology, endocrinology, pulmonology, …).
+
+Format is BITS/JATS XML (DTD `BITS-book2.dtd`); `src/parse_nxml.py` flattens
+each article into `(section_title, section_text)` pairs.
+
+Bulk archive: <https://ftp.ncbi.nlm.nih.gov/pub/litarch/3d/12/statpearls_NBK430685.tar.gz>
+(NCBI LitArch FTP mirror). After extraction, drop everything except the
+`nurse-article-*.nxml` files.
 
 ## Ontology
 
